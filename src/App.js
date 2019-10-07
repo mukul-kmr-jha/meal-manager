@@ -7,18 +7,33 @@ import Login from './component/Login';
 import MealsList from './component/MealsList';
 import {BrowserRouter, Route,Switch, Redirect} from 'react-router-dom';
 import UserForm from "./component/UserForm";
+import MealForm from "./component/MealForm";
+import {connect} from "react-redux";
 
 class App extends Component {
-    constructor(props){
-        super(props);
-        this.state={
-            isUserLoggedIn: false
+
+    isAdmin = ()=> {
+        if(this.props.curr_user){
+            return this.props.curr_user.role ==='admin';
+        }
+        // no curr_user (no one is logged-in)
+        else{
+            return false;
         }
     }
-    isUserLoggedIn = ()=>{
-        return true;
+    isManager = ()=> {
+        console.log(this.props.curr_user);
+        if(this.props.curr_user){
+            return this.props.curr_user.role ==='admin';
+        }
+        // no curr_user (no one is logged-in)
+        else{
+            return false;
+        }
     }
+
     render() {
+        console.log(this.props);
         return (
             <BrowserRouter>
                 <div className="App">
@@ -26,31 +41,59 @@ class App extends Component {
                     <Switch>
                         <Route exact path='/login' component={Login}/>
                         <Route path='/signup' component={Login}/>
-                        <Route path='/users/:userId' component={UserForm}/>
+
                         <Route exact path="/" render={(props) => (
-                            this.isUserLoggedIn() ? (
+                            this.props.isLoggedIn ? (
                                 <Home {...props} />
                             ) : (
                                 <Redirect to="/login"/>
                             )
                         )}/>
                         <Route exact path="/home" render={(props) => (
-                            this.isUserLoggedIn() ? (
+                            this.props.isLoggedIn ? (
                                 <Home {...props} />
                             ) : (
                                 <Redirect to="/login"/>
                             )
                         )}/>
                         <Route exact path="/meals" render={(props) => (
-                            this.isUserLoggedIn() ? (
+                            this.props.isLoggedIn ? (
                                 <MealsList {...props} />
                             ) : (
                                 <Redirect to="/login"/>
                             )
                         )}/>
+                        <Route exact path="/add/meal/" render={(props) => (
+                            this.props.isLoggedIn ? (
+                                <MealForm {...props} />
+                            ) : (
+                            <Redirect to="/login"/>
+                            )
+                        )}/>
+                        <Route exact path="/add/user" render={(props) => (
+                            (this.isManager() || this.isAdmin())? (
+                                <UserForm {...props} />
+                            ) : (
+                            <Redirect to="/login"/>
+                            )
+                         )}/>
+                        <Route exact path="/meals/:mealId" render={(props) => (
+                            this.props.isLoggedIn ? (
+                                <MealForm {...props} />
+                            ) : (
+                                <Redirect to="/login"/>
+                            )
+                        )}/>
                         <Route exact path="/users" render={(props) => (
-                            this.isUserLoggedIn() ? (
+                            (this.isManager() || this.isAdmin()) ? (
                                 <UserList {...props} />
+                            ) : (
+                                <Redirect to="/login"/>
+                            )
+                        )}/>
+                        <Route exact path='/users/:userId'  render={(props) => (
+                            (this.isManager() || this.isAdmin()) ? (
+                                <UserForm {...props} />
                             ) : (
                                 <Redirect to="/login"/>
                             )
@@ -63,4 +106,11 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state)=>{
+   return {
+        isLoggedIn: state.isLoggedIn,
+       curr_user: state.curr_user
+    }
+}
+
+export default connect(mapStateToProps)(App);

@@ -3,6 +3,7 @@ import User from "./User";
 import {connect} from 'react-redux';
 
 import Meal from "./Meal";
+import {Link} from "react-router-dom";
 
 class UserList extends Component {
     constructor(props){
@@ -22,7 +23,10 @@ class UserList extends Component {
         return(
             <div className="userlist">
                 <div className="userlistTitle">
-                    <h4 > List Of Users </h4>
+                    <h4 > List Of Users <span className="addIcon">
+                            <Link to="add/user" ><i className=" material-icons">add_circle_outline</i> </Link>
+                        </span>
+                    </h4>
                 </div>
                 <div className="userscont">
                     {userlist}

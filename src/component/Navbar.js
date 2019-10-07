@@ -1,18 +1,15 @@
 import React, {Component} from "react";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
 
-export default class Navbar extends Component{
+class Navbar extends Component{
 
-    isLoggedIn=()=>{
-        return true;
-    }
 
     render(){
         // store the userId in this variable
-        const userId = 123;
-        const userIcon = this.isLoggedIn() ? (
+        const userIcon = this.props.isLoggedIn? (
             <li>
-                <NavLink to={"/users/"+userId}>
+                <NavLink to={"/users/"+this.props.curr_user.userId}>
                     <i className="material-icons">person_outline</i>
                 </NavLink>
             </li>
@@ -38,3 +35,12 @@ export default class Navbar extends Component{
         )
     };
 }
+
+const mapStateToProps=(state)=>{
+    return{
+        isLoggedIn: state.isLoggedIn,
+        curr_user: state.curr_user
+    }
+};
+
+export default connect(mapStateToProps)(Navbar);

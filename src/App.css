@@ -1,5 +1,6 @@
 nav{
   background-color: #5dddd3;
+  z-index: 200;
 }
 .logo{
   width: 60px;
@@ -30,6 +31,10 @@ nav{
   padding: 0 0 40px 0;
 
 }
+.filter-form-box{
+  border-left: 3px solid #4fc3f7;
+  padding-left:20px;
+}
 .row{
   margin-bottom:0;
 }
@@ -54,6 +59,10 @@ nav{
 .active-tab{
   border-bottom: 2px solid #F44336;
 }
+.addIcon{
+  display: inline-block;
+  padding-left: 20px;
+}
 
 
 
@@ -72,7 +81,7 @@ nav{
 
 
 
-.userlistTitle{
+.userlistTitle, .meallistTitle{
   text-align:center;
 }
 .userImg{
@@ -84,7 +93,7 @@ nav{
 
 }
 
-.userscont{
+.userscont, .mealscont{
   display:flex;
   flex-wrap:wrap;
   padding: 15px;
@@ -94,15 +103,19 @@ nav{
   text-align:center;
   transition: all 0.8s;
 }
-.userscont .card{
+.userscont .card, .mealscont .card{
   margin: 10px;
   width:300px;
   /*text-align:center;*/
 }
-.userscont .card:hover{
+.userscont .card:hover, .mealscont .card:hover{
   box-shadow: 1px 2px 5px ;
   transform: scale(1.01);
 
+}
+
+.mealslist{
+  position:relative;
 }
 
 
@@ -154,18 +167,55 @@ nav{
   transform: scaleX(1);
 }
 
+
+/*fiters styles */
+.filtersEle{
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  background-color: #000000cf;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 200;
+  transform: translate(-50%,-50%);
+
+}
+.filter-form-box input{
+  color: white;
+
+}
+
+
 .filter-title{
   background-color: #05856d;
-  padding:10px 14px;
+  padding: 10px 14px;
   display: inline-block;
-  color:white;
+  margin-top: 174px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 1px 2px 5px black;
+  /*transition:all 0.6s ;*/
+  animation: shake 1s linear infinite alternate;
+}
+.filter-title:hover{
+  transform: translateY(-2px);
+  box-shadow: 1px 2px 5px black;
 }
 .filterContainer{
+  text-align:center;
   position: fixed;
-  top: 120px;
+  padding: 50px 10px;
+  width:0;
+  top: 0px;
   left: 0px;
   z-index: 10;
+  height: 100vh;
+
 }
+
+
+
 .showFilters{
   background-color: darkcyan;
   position:absolute;
@@ -174,6 +224,9 @@ nav{
   width:450px;
   height:550px;
 }
+
+
+
 
 .mt-2{
   margin-top:20px;
@@ -189,4 +242,16 @@ nav{
 }
 .text-left{
   text-align:left;
+}
+
+@keyframes shake {
+    0%{
+        transform: translateY(0px);
+     }
+    100%{
+      transform: translateY(6px);
+    }
+
+
+
 }

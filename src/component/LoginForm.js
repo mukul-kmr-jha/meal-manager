@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
+import {withRouter} from "react-router";
 
 class LoginForm extends Component{
     constructor(props){
@@ -28,6 +29,9 @@ class LoginForm extends Component{
             'name_email':this.state.name_email,
             'password':this.state.password
         });
+        // console.log(this.props);
+        this.props.history.push('/meals');
+
 
 
     }
@@ -36,7 +40,8 @@ class LoginForm extends Component{
         console.log('LogOut the User');
 
         // update the store
-
+        this.props.logout(this.props.curr_user.userId);
+        this.props.history.push('/home');
 
     }
     render(){
@@ -46,7 +51,7 @@ class LoginForm extends Component{
             return (
                 <div className="form-box row">
                     <h4 className="loginHead">Login</h4>
-                    <form className="col s12" onSubmit={this.handleLogin}>
+                    <form method="post" className="col s12" onSubmit={this.handleLogin}>
                         <div className="row">
                             <div className="input-field col s12">
                                 <input placeholder="Name / Email" name="name_email" type="text"
@@ -69,9 +74,9 @@ class LoginForm extends Component{
         else{
             return(
                 <div className="form-box row">
-                    <h4 className="loginHead">Login</h4>
-                    <form className="col s12" onSubmit={this.handleLogout}>
-                        <p>Logged IN as {this.props.curr_user[0].name}</p>
+                    <h4 className="loginHead">Logged-In</h4>
+                    <form method= "post" className="col s12" onSubmit={this.handleLogout}>
+                        <p>Logged In as <b> {this.props.curr_user.name} </b></p>
                         <button className="btn waves-effect waves-light" type="submit" name="action">LogOut
                         </button>
                     </form>
@@ -83,15 +88,15 @@ class LoginForm extends Component{
 
 const mapStateToProps= (state)=>{
     return {
-        ...state
+        isLoggedIn: state.isLoggedIn,
+        curr_user: state.curr_user
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return {
-        login: (user)=>{
-            return dispatch({type:'LOGIN',payload:user})
-        }
+        login: (user)=>dispatch({type:'LOGIN',payload:user}),
+        logout: (userId)=>dispatch({type:'LOGOUT',payload:userId})
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginForm));

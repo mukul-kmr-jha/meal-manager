@@ -7,7 +7,7 @@ import femaleImg from '../images/user-female.png';
 class User extends Component{
 
     render(){
-        console.log(this.props);
+        // console.log(this.props);
         return(
 
             <div className="card underline">
