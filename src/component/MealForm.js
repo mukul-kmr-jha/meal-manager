@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
+import {a_addMeal, a_deleteMeal, a_editMeal} from "../actionCreators/mealActionCreator";
 
 class MealForm  extends Component{
     constructor(props){
@@ -133,15 +134,15 @@ const mapStateToProps = (state,ownProps) =>{
     console.log(mealId);
     console.log(state.meals);
     return {
-        ...state.meals.find(meal => meal.mealId === mealId )
+        ...state.meals.meals.find(meal => meal.mealId === mealId )
     };
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return {
-        editMeal : (meal)=>dispatch({type:'EDIT_MEAL',payload:meal}),
-        deleteMeal : (mealId) => dispatch({type:'DELETE_MEAL',payload: mealId}),
-        addMeal : (meal) => dispatch({type:'ADD_MEAL', payload:meal})
+        editMeal : (meal)=>dispatch(a_editMeal(meal)),
+        deleteMeal : (mealId) => dispatch(a_deleteMeal(mealId)),
+        addMeal : (meal) => dispatch(a_addMeal(meal))
     };
 }
 

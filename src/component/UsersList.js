@@ -38,8 +38,8 @@ class UserList extends Component {
 
 const mapStateToProps = (state)=>{
     return{
-        'users' : state.users,
-        curr_user : state.curr_user
+        users : state.users.users,
+        curr_user : state.users.curr_user
     }
 }
 

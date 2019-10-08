@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router";
+import {a_addUser, a_logoutUser} from "../actionCreators/userActionCreator";
 
 class SignupForm extends Component{
     constructor(props){
@@ -57,19 +58,22 @@ class SignupForm extends Component{
                 <form method="post" className="col s12" onSubmit={this.handleSubmit}>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input placeholder="Full-Name" name="name" type="text" className="validate"
+                            <label htmlFor="name">Name</label>
+                            <input name="name" type="text" className="validate"
                                    value={this.state.name} onChange={this.handleChange}/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12 text-right">
-                            <input placeholder="Email" name="email" type="email" className="validate"
+                            <label htmlFor="email">Email</label>
+                            <input name="email" type="email" className="validate"
                                    value={this.state.email} onChange={this.handleChange}/>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s12">
-                            <input placeholder="Password" name="password" type="password" className="validate"
+                            <label htmlFor="password">Password</label>
+                            <input name="password" type="password" className="validate"
                                    value={this.state.password} onChange={this.handleChange}/>
                         </div>
                     </div>
@@ -100,7 +104,7 @@ class SignupForm extends Component{
             <div className="form-box row">
                 <h4 className="loginHead">Logged-In</h4>
                 <form className="col s12" onSubmit={this.handleLogout}>
-                    <p>Logged In as <b>{this.props.curr_user.name}</b></p>
+                    <p>Logged In as <b>{this.props.curr_user.name} ( {this.props.curr_user.role} )</b></p>
                     <button className="btn waves-effect waves-light" type="submit" name="action" onClick={this.handleLogout}>LogOut
                     </button>
                 </form>
@@ -114,14 +118,14 @@ const mapStateToProps= (state,ownProps)=>{
     console.log(ownProps);
     return {
         ...ownProps,
-        isLoggedIn: state.isLoggedIn,
-        curr_user:state.curr_user
+        isLoggedIn: state.users.isLoggedIn,
+        curr_user: state.users.curr_user
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return {
-        signup: (user)=>dispatch({type:'ADD_USER',payload:user}),
-        logout: (userId)=> dispatch({type:'LOGOUT',payload:userId})
+        signup: (user)=>dispatch(a_addUser(user)),
+        logout: (userId)=> dispatch(a_logoutUser(userId))
     }
 }
 

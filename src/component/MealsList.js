@@ -35,7 +35,7 @@ class MealsList extends Component {
 
 const mapStateToProps=(state)=>{
     return {
-        "meals": state.meals
+        "meals": state.meals.meals
     }
 }
 

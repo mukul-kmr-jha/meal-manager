@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
 import {withRouter} from "react-router";
+import {a_addUser, a_loginUser, a_logoutUser} from "../actionCreators/userActionCreator";
 
 class LoginForm extends Component{
     constructor(props){
@@ -54,13 +55,16 @@ class LoginForm extends Component{
                     <form method="post" className="col s12" onSubmit={this.handleLogin}>
                         <div className="row">
                             <div className="input-field col s12">
-                                <input placeholder="Name / Email" name="name_email" type="text"
+                                <label htmlFor="first_name">First Name</label>
+                                <input  name="name_email" id="name_email" type="text"
                                        value={this.state.name_email} onChange={this.handleChange} className="validate"/>
+
                             </div>
                         </div>
                         <div className="row">
                             <div className="input-field col s12">
-                                <input placeholder="Password" name="password" type="password"
+                                <label htmlFor="password">Password</label>
+                                <input name="password" type="password"
                                        value={this.state.password} onChange={this.handleChange} className="validate"/>
                             </div>
                         </div>
@@ -76,7 +80,7 @@ class LoginForm extends Component{
                 <div className="form-box row">
                     <h4 className="loginHead">Logged-In</h4>
                     <form method= "post" className="col s12" onSubmit={this.handleLogout}>
-                        <p>Logged In as <b> {this.props.curr_user.name} </b></p>
+                        <p>Logged In as <b> {this.props.curr_user.name} ( {this.props.curr_user.role} ) </b></p>
                         <button className="btn waves-effect waves-light" type="submit" name="action">LogOut
                         </button>
                     </form>
@@ -88,14 +92,14 @@ class LoginForm extends Component{
 
 const mapStateToProps= (state)=>{
     return {
-        isLoggedIn: state.isLoggedIn,
-        curr_user: state.curr_user
+        isLoggedIn: state.users.isLoggedIn,
+        curr_user: state.users.curr_user
     }
 }
 const mapDispatchToProps=(dispatch)=>{
     return {
-        login: (user)=>dispatch({type:'LOGIN',payload:user}),
-        logout: (userId)=>dispatch({type:'LOGOUT',payload:userId})
+        login: (user)=>dispatch(a_loginUser(user)),
+        logout: (userId)=>dispatch(a_logoutUser(userId))
     }
 }
 

@@ -25,11 +25,10 @@ nav{
 }
 
 .form-box{
-  border: 1px solid black;
-  box-shadow: 1px 2px 10px #05856d;
+  border: 2px solid black;
   margin-top: 30px;
   padding: 0 0 40px 0;
-
+  box-shadow: 5px 8px 3px #000;
 }
 .filter-form-box{
   border-left: 3px solid #4fc3f7;
@@ -47,7 +46,8 @@ nav{
 }
 .loginToggler{
   background-color: #09d3ac;
-  box-shadow: 1px 2px 10px black;
+  box-shadow: 4px 5px 4px black;
+  border: 2px solid #189173;
   color:white;
 }
 

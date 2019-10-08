@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import { connect } from 'react-redux';
+import {a_addUser, a_deleteUser, a_editUser} from "../actionCreators/userActionCreator";
+import {a_editMeal} from "../actionCreators/mealActionCreator";
 
 class UserForm extends Component {
     constructor(props) {
@@ -49,7 +51,6 @@ class UserForm extends Component {
 
     handleAdd = (e) => {
         e.preventDefault();
-        console.log("Are you sure Prompt!");
         if (this.state.user.name === '' || this.state.user.email === '' || this.state.user.password === '' || this.state.user.role === '') {
             console.log("Please fill all the fields");
         } else {
@@ -161,15 +162,15 @@ const mapStateToProps = (state,ownProps) =>{
     const userId = ownProps.match.params.userId;
     console.log(userId);
     return {
-        user : state.users.find(user => user.userId === userId )
+        user : state.users.users.find(user => user.userId === userId )
     };
 }
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        addUser : (user) => dispatch({type:'ADD_USER',payload:user}),
-        editUser : (user) =>dispatch({type:'EDIT_USER',payload:user}),
-        deleteUser : (userId) =>dispatch({type:'DELETE_USER',payload:userId})
+        addUser : (user) => dispatch(a_addUser(user)),
+        editUser : (user) =>dispatch(a_editUser(user)),
+        deleteUser : (userId) =>dispatch(a_deleteUser(userId))
     }
 
 }
